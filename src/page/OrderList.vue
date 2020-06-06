@@ -34,7 +34,7 @@
         label="操作"
         width="120">
         <template slot-scope="scope">
-          <el-button>提交评价</el-button>
+          <el-button @click="comment(scope.row.id,scope.row.orderComment)">提交评价</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -78,6 +78,25 @@
           }
         }).catch(error => {
           console.error(error)
+        })
+      },
+      comment(id,comment){
+        this.$axios.get('/order/comment',{
+          params:{
+            id: id,
+            comment: comment
+          }
+        }).then(response => {
+          console.log(response)
+          if (response.data.status == 200) {
+            this.$message.success("修改成功")
+          } else {
+            this.$message.error("修改失败")
+          }
+          this.refresh()
+        }).catch(error => {
+          console.error(error)
+          this.$message.error("修改失败")
         })
       }
     },

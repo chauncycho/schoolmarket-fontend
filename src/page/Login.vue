@@ -44,7 +44,12 @@
 
             //登录成功
             that.$message.success('Hello ' + currentUser.name);
-            that.$router.push('/home')
+            console.log(currentUser)
+            if (currentUser.manager){
+              that.$router.push('/admin')
+            } else {
+              that.$router.push('/home')
+            }
           } else {
             console.log(response.data.message)
             this.$message.error("登录失败")
